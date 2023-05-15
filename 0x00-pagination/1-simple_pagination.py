@@ -36,5 +36,5 @@ class Server:
         assert isinstance(page_size, int) and page_size > 0
         index = index_range(page, page_size)
         data = self.dataset()
-        page = [line for line in data[index[0] : index[1]]]
+        page = [line for line in data[index[0]:index[1]]]
         return page

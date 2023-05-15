@@ -30,15 +30,17 @@ class Server:
         if self.__indexed_dataset is None:
             dataset = self.dataset()
             truncated_dataset = dataset[:1000]
-            self.__indexed_dataset = {i: dataset[i] for i in range(len(dataset))}
+            self.__indexed_dataset = {
+                i: dataset[i] for i in range(len(dataset))
+            }
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
         Returns a dictionary with key-value pairs
         """
-        assert type(index) == int
-        assert type(page_size) == int
+        assert isinstance(index, int)
+        assert isinstance(page_size, int)
         csv = self.indexed_dataset()
         size = len(csv)
         assert 0 <= index < size
