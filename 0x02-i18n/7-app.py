@@ -24,6 +24,7 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
+babel = Babel(app)
 
 
 def get_user() -> Union[Dict, None]:
@@ -43,6 +44,7 @@ def before_request() -> None:
     g.user = user
 
 
+@babel.localeselector
 def get_locale() -> str:
     """Retrieves the locale for a web page."""
     locale = request.args.get("locale", "")
@@ -56,6 +58,7 @@ def get_locale() -> str:
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
+@babel.timezoneselector
 def get_timezone() -> str:
     """Retrieves the timezone."""
     timezone = request.args.get("timezone", "").strip()
@@ -65,9 +68,6 @@ def get_timezone() -> str:
         return pytz.timezone(timezone).zone
     except pytz.exceptions.UnknownTimeZoneError:
         return app.config["BABEL_DEFAULT_TIMEZONE"]
-
-
-babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 
 
 @app.route("/")

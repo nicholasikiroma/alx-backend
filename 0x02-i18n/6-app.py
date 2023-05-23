@@ -23,6 +23,7 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
+babel = Babel(app)
 
 
 def get_user() -> Union[Dict, None]:
@@ -42,6 +43,7 @@ def before_request() -> None:
     g.user = user
 
 
+@babel.localeselector
 def get_locale() -> str:
     """Retrieves the locale for a web page."""
     locale = request.args.get("locale", "")
@@ -53,9 +55,6 @@ def get_locale() -> str:
     if header_locale in app.config["LANGUAGES"]:
         return header_locale
     return request.accept_languages.best_match(app.config["LANGUAGES"])
-
-
-babel = Babel(app, locale_selector=get_locale)
 
 
 @app.route("/")
