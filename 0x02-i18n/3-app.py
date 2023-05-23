@@ -17,7 +17,7 @@ app.config.from_object(Config)
 babel = Babel(app)
 
 
-@babel.locale_selector
+@babel.localeselector
 def get_locale() -> str:
     """Retrieves the locale for a web page."""
     return request.accept_languages.best_match(app.config["LANGUAGES"])
