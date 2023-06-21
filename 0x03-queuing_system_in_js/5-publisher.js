@@ -14,7 +14,7 @@ function publishMessage(message, time) {
 }
 
 client.on('connect', () => {
-    console.log('Redis client connected to the server');
+  console.log('Redis client connected to the server');
 });
 
 publishMessage('Holberton Student #1 starts course', 100);
